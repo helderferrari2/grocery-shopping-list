@@ -27,7 +27,7 @@ class ShoppingListItemFormRequest extends FormRequest
         $default = ['shopping_list_id' => 'required|integer'];
 
         $base = [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:shopping_list_items',
             'quantity' => 'nullable|integer|between:1,99',
             'completed' => 'nullable|boolean',
             'value' => 'nullable|numeric|between:0,9999.99'
