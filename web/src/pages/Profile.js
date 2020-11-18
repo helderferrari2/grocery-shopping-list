@@ -13,7 +13,7 @@ const Profile = () => {
                 variant="top"
                 src={UserNoImage}
                 className="mx-auto"
-                style={{ "max-width": 220 }}
+                style={{ maxWidth: 220 }}
               />
               <Card.Title className="m-3">John Doe</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">

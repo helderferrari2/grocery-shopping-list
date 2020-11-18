@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import ListCard from "../components/ListCard";
-import { storeList, fetchAll } from "../store/ducks/shoppingLists";
+import { fetchAllLists, storeList } from "../store/ducks/shoppingLists";
 
 const ShoppingLists = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const ShoppingLists = () => {
   const items = useSelector((state) => state.shoppingLists.items);
 
   useEffect(() => {
-    dispatch(fetchAll());
+    dispatch(fetchAllLists());
   }, []);
 
   const handleChange = (value) => {
@@ -20,7 +20,7 @@ const ShoppingLists = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!list) return;
-    dispatch(storeList(list));
+    dispatch(storeList({ name: list }));
     e.target.reset();
   };
 

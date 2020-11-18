@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit"
 /**
  * Import All Reducers
  */
+import auth from "./ducks/auth"
 import shoppingLists from "./ducks/shoppingLists"
 
 /**
@@ -10,6 +11,7 @@ import shoppingLists from "./ducks/shoppingLists"
  */
 export default configureStore({
     reducer: {
+        auth,
         shoppingLists
     }
 })
