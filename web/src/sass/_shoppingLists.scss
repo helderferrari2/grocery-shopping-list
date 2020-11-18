@@ -11,12 +11,20 @@
 
 .list-card {
   margin: 10px 0;
-  background: #e1e5f2;
-  padding: 10px;
+  background: #f1f3fa;
+  padding: 20px;
 }
 
-.table th,
-.table td {
-  vertical-align: middle;
-  padding: 0.75rem 2px;
+.list-card:hover {
+  border-left: 5px solid $primary;
+}
+
+.list-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list-card-actions a {
+  margin: 0 10px;
+  color: $text !important;
 }

@@ -3,9 +3,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Routes from "./router/routes";
 import "./sass/main.scss";
+import store from "./store";
+import { Provider } from "react-redux";
 
-const App = () => {
-  return (
+const App = () => (
+  <Provider store={store}>
     <div className="App">
       <div className="main">
         <div className="main__header">
@@ -21,7 +23,7 @@ const App = () => {
         </div>
       </div>
     </div>
-  );
-};
+  </Provider>
+);
 
 export default App;

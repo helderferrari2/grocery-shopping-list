@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import ListItemCard from "../components/ListItemCard";
+import ListItems from "../components/ListItems";
 
 const ShoppingListItems = () => {
   const [items, setItems] = useState([]);
@@ -12,13 +13,13 @@ const ShoppingListItems = () => {
 
   const fetchShoppingListItems = () => {
     let items = [
-      { id: 1, quantity: 1, name: "Arroz", completed: true, value: 12.5 },
-      { id: 2, quantity: 3, name: "Feijão", completed: false, value: 2.5 },
-      { id: 3, quantity: 10, name: "Geladeira", completed: true, value: 9.99 },
-      { id: 4, quantity: 1, name: "Leite C", completed: true, value: 9.99 },
-      { id: 5, quantity: 1, name: "Leite", completed: true, value: 9.99 },
-      { id: 6, quantity: 1, name: "Pinga", completed: true, value: 9.99 },
-      { id: 7, quantity: 1, name: "Danone", completed: true, value: 998.99 },
+      { id: 1, quantity: 1, name: "Arroz", completed: true, category: "Mercearia", value: 12.5 },
+      { id: 2, quantity: 3, name: "Feijão", completed: false, category: "Mercearia", value: 2.5 },
+      { id: 3, quantity: 10, name: "Geladeira", completed: true, category: "Eletronicos", value: 9.99 },
+      { id: 4, quantity: 1, name: "Leite C", completed: true, category: "Doces", value: 9.99 },
+      { id: 5, quantity: 1, name: "Leite", completed: true, category: "Leite", value: 9.99 },
+      { id: 6, quantity: 1, name: "Pinga", completed: true, category: "Destilados", value: 9.99 },
+      { id: 7, quantity: 1, name: "Danone", completed: true, category: "Grosso", value: 998.99 },
     ];
     return setItems(items);
   };
@@ -26,7 +27,7 @@ const ShoppingListItems = () => {
   return (
     <Container>
       <Row className="d-flex justify-content-center">
-        <Col>
+        <Col lg={8}>
           <Card>
             <Card.Body>
               <Card.Title>Add Item</Card.Title>
@@ -43,15 +44,11 @@ const ShoppingListItems = () => {
               </Form>
               {/* End form */}
 
+              {/* Shopping List Items */}
               <div className="shopping-lists">
-                <ul>
-                  {items.map((item) => (
-                    <li key={item.id}>
-                      <ListItemCard item={item}></ListItemCard>
-                    </li>
-                  ))}
-                </ul>
+                <ListItems items={items} />
               </div>
+              {/* End Shopping List Items*/}
             </Card.Body>
           </Card>
         </Col>

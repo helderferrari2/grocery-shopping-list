@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Card, Col, Container, Form, Row } from "react-bootstrap";
 import ListCard from "../components/ListCard";
+import { storeList, fetchAll } from "../store/ducks/shoppingLists";
 
 const ShoppingLists = () => {
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(0);
+  const dispatch = useDispatch();
+  const [list, setList] = useState();
+  const items = useSelector((state) => state.shoppingLists.items);
 
   useEffect(() => {
-    fetchShoppingLists();
+    dispatch(fetchAll());
   }, []);
 
-  const fetchShoppingLists = () => {
-    let items = [
-      { id: 1, name: "Lista 1", completed: true },
-      { id: 2, name: "Lista Condor", completed: false },
-      { id: 3, name: "Lista Carrefour", completed: false },
-      { id: 4, name: "Lista mercado 20/2010", completed: false },
-      { id: 5, name: "List", completed: false },
-      { id: 6, name: "List", completed: false },
-      { id: 7, name: "List", completed: false },
-      { id: 8, name: "List", completed: false },
-      { id: 9, name: "List", completed: false },
-    ];
-    return setList(items);
+  const handleChange = (value) => {
+    setList(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!list) return;
+    dispatch(storeList(list));
+    e.target.reset();
   };
 
   return (
@@ -32,28 +31,31 @@ const ShoppingLists = () => {
           <Card>
             <Card.Body>
               <Card.Title>Add new List</Card.Title>
-              {/* Form */}
-              <Form>
+              {/* Shopping List Form */}
+              <Form onSubmit={handleSubmit}>
                 <div className="d-flex">
                   <input
                     type="text"
                     className="form-control mr-2"
                     placeholder="Type for a new list..."
+                    onChange={(e) => handleChange(e.target.value)}
                   ></input>
                   <button className="btn btn-primary">Add</button>
                 </div>
               </Form>
-              {/* End form */}
+              {/* End Shopping List Form */}
 
+              {/* Shopping Lists */}
               <div className="shopping-lists">
                 <ul>
-                  {list.map((item) => (
+                  {items.map((item) => (
                     <li key={item.id}>
-                      <ListCard item={item}></ListCard>
+                      <ListCard item={item} />
                     </li>
                   ))}
                 </ul>
               </div>
+              {/* Shopping Lists */}
             </Card.Body>
           </Card>
         </Col>

@@ -1,37 +1,48 @@
 import React from "react";
-import { Form } from "react-bootstrap";
-import { BsX } from "react-icons/bs";
+import { Col, Form, Row } from "react-bootstrap";
+import { BsPencil, BsSearch, BsX } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteList } from "../store/ducks/shoppingLists"
 
 const ListCard = ({ item }) => {
+
+  const dispatch = useDispatch();
+
+  const removeList = (id) => {
+    dispatch(deleteList(id))
+  }
+
+
   return (
-    <Link to={`/shopping-lists/${item.id}`}>
-      <div className="list-card">
-        <Form>
-          <table className="table m-0">
-            <tbody>
-              <tr>
-                <td style={{ width: "10%" }}>
-                  <Form.Check
-                    custom
-                    type={"checkbox"}
-                    defaultChecked={item.completed}
-                    onChange={() => console.log('aq')}
-                  />
-                </td>
-                <td style={{ width: "50%" }}>
-                  <Form.Control value={item.name} onChange={() => console.log('aq')} />
-                </td>
-                <td style={{ width: "10%" }}></td>
-                <td style={{ width: "10%" }}>
-                  <BsX />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </Form>
-      </div>
-    </Link>
+    <div className="list-card">
+      <Row>
+        <Col>
+          <Form.Check
+            custom
+            type={"checkbox"}
+            defaultChecked={item.completed}
+            onChange={() => console.log("aq")}
+            label={item.name}
+          />
+        </Col>
+        <Col>
+          <div className="list-card-actions">
+            <Link to={`/shopping-lists/${item.id}`}>
+              <BsSearch />
+            </Link>
+
+            <a href="#" onClick={(e) => window.alert("editar")}>
+              <BsPencil />
+            </a>
+
+            <a href="#" onClick={() => removeList(item.id)}>
+              <BsX />
+            </a>
+          </div>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
