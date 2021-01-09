@@ -1,15 +1,17 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import User from '../models/User';
+import User from '../schemas/User';
 
 class AuthController {
   async login(request, response) {
     try {
       const { email, password } = request.body;
+
+      // Check if user exists
       const user = await User.findOne({ email });
       if (!user) return response.status(401).json({ error: 'User not found' });
 
-      const passwordMatched = await bcrypt.compare(password, user.password);
+      // Check if passwords match
+      const passwordMatched = await user.validatePassword(password);
       if (!passwordMatched)
         return response.status(401).json({ error: "Password doesn't match" });
 

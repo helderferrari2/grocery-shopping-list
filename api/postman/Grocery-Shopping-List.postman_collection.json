@@ -9,22 +9,21 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "login",
+					"name": "Login",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "90ac5a45-ad1f-4227-9ae6-1b0b9cfc987f",
+								"id": "97cda9e0-256e-44f9-93f4-2efd296778c3",
 								"exec": [
 									"//Checa se o retorno da requisicao está com status 200\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
-									"    \r",
-									"    \r",
-									"});//Seta o token no header\r",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");\r",
-									"var arr_tmp = varHeader.split(\" \");\r",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);"
+									"});\r",
+									"\r",
+									"//Seta o token no header\r",
+									"let jsonData = JSON.parse(responseBody)\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -32,150 +31,24 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "test@test.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "12345678",
-									"type": "text"
-								}
-							],
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
 							"options": {
-								"formdata": {}
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
 						"url": {
-							"raw": "http://{{ip}}/auth/login",
+							"raw": "http://{{ip}}/login",
 							"protocol": "http",
 							"host": [
 								"{{ip}}"
 							],
 							"path": [
-								"auth",
 								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "me",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/auth/me",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"auth",
-								"me"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "refresh-token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "6fa73650-9cf7-4482-a1aa-a59a94806440",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"    \r",
-									"    \r",
-									"});//Seta o token no header\r",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");\r",
-									"var arr_tmp = varHeader.split(\" \");\r",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/auth/refresh-token",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"auth",
-								"refresh-token"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "logout",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/auth/logout",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"auth",
-								"logout"
 							]
 						}
 					},
@@ -185,67 +58,44 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "User",
+			"name": "Users",
 			"item": [
 				{
-					"name": "register",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "57882884-e9aa-4305-8f7a-58ccdff372ca",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
+					"name": "index",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New User",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "test@test.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "12345678",
-									"type": "text"
-								},
-								{
-									"key": "password_confirmation",
-									"value": "12345678",
-									"type": "text"
-								}
+						"url": {
+							"raw": "http://{{ip}}/users",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
 							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John\",\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
 							"options": {
-								"formdata": {}
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
 						"url": {
@@ -262,81 +112,58 @@
 					"response": []
 				},
 				{
-					"name": "update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "57e81d75-0fa2-4f44-8921-02db668331d7",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
+					"name": "show",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [
 							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
 								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded",
-								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman."
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update Name",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "test1@test.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "12345678",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
 						"url": {
-							"raw": "http://{{ip}}/users/2",
+							"raw": "http://{{ip}}/users/5fca7ab0d5ed0e260c898fba",
 							"protocol": "http",
 							"host": [
 								"{{ip}}"
 							],
 							"path": [
 								"users",
-								"2"
+								"5fca7ab0d5ed0e260c898fba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Name\",\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/users",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"users"
 							]
 						}
 					},
@@ -349,54 +176,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/users/1",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"users",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "show",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://{{ip}}/users/2",
+							"raw": "http://{{ip}}/users",
 							"protocol": "http",
 							"host": [
 								"{{ip}}"
 							],
 							"path": [
-								"users",
-								"2"
+								"users"
 							]
 						}
 					},
@@ -406,238 +197,119 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Shopping List",
+			"name": "Lists",
 			"item": [
 				{
-					"name": "Delete",
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{ip}}/lists",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"lists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Complete List\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/lists",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"lists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lista Atualizada\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/lists/5ff9f3e7043bc938c8143eb7",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"lists",
+								"5ff9f3e7043bc938c8143eb7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
 					"request": {
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists/3",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "42f604f8-f42f-4022-a57b-fa7809479f6a",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded",
-								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman."
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update Name",
-									"type": "text"
-								},
-								{
-									"key": "completed",
-									"value": "1",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists/1",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Index",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists/1",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b0108da7-a827-494f-ad9e-c6e791b261b7",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New List",
-									"type": "text"
-								},
-								{
-									"key": "completed",
-									"value": "0",
-									"type": "text",
-									"disabled": true
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
 						"url": {
-							"raw": "http://{{ip}}/shopping-lists",
+							"raw": "http://{{ip}}/lists/5ff9f271f3d29a4c404f476d",
 							"protocol": "http",
 							"host": [
 								"{{ip}}"
 							],
 							"path": [
-								"shopping-lists"
+								"lists",
+								"5ff9f271f3d29a4c404f476d"
 							]
 						}
 					},
@@ -647,453 +319,133 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Shopping List Item",
+			"name": "ListItems",
 			"item": [
 				{
-					"name": "Delete",
+					"name": "All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"list_id\": \"5ffa0200092a6148a41a1ee3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/listItems/all",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"listItems",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Cat\",\r\n    \"quantity\": 1,\r\n    \"price\": 22,\r\n    \"list_id\": \"5ffa0200092a6148a41a1ee3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/listItems",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"listItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bilada\",\r\n    \"completed\": true,\r\n    \"quantity\": 10,\r\n    \"price\": 199.99,\r\n    \"list_id\": \"5ffa0200092a6148a41a1ee3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{ip}}/listItems/5ffa055a1ccbb940f4598183",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"path": [
+								"listItems",
+								"5ffa055a1ccbb940f4598183"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
 					"request": {
 						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists-items/1",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists-items",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c7f87e6f-7170-462c-99dd-d7837071ec9d",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							},
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/x-www-form-urlencoded",
-								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman."
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update Name",
-									"type": "text"
-								},
-								{
-									"key": "completed",
-									"value": "1",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists-items/2",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists-items",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "http://{{ip}}/shopping-lists-items?shopping_list_id=1",
-							"protocol": "http",
-							"host": [
-								"{{ip}}"
-							],
-							"path": [
-								"shopping-lists-items"
-							],
-							"query": [
-								{
-									"key": "shopping_list_id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c01c9044-05d5-4a14-8222-a9e4dfdea3be",
-								"exec": [
-									"//Checa se o retorno da requisicao está com status 200",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"    ",
-									"    ",
-									"});//Seta o token no header",
-									"var varHeader = postman.getResponseHeader(\"Authorization\");",
-									"var arr_tmp = varHeader.split(\" \");",
-									"postman.setEnvironmentVariable(\"token\", arr_tmp[1]);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
 								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "caarne",
-									"type": "text"
-								},
-								{
-									"key": "quantity",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "completed",
-									"value": "0",
-									"type": "text"
-								},
-								{
-									"key": "value",
-									"value": "999.33",
-									"type": "text"
-								},
-								{
-									"key": "shopping_list_id",
-									"value": "1",
-									"type": "text"
-								}
-							],
-							"options": {
-								"formdata": {}
-							}
-						},
 						"url": {
-							"raw": "http://{{ip}}/shopping-lists-items",
+							"raw": "http://{{ip}}/listItems/5ff9f271f3d29a4c404f476d",
 							"protocol": "http",
 							"host": [
 								"{{ip}}"
 							],
 							"path": [
-								"shopping-lists-items"
+								"listItems",
+								"5ff9f271f3d29a4c404f476d"
 							]
 						}
 					},
 					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "7cb9bd46-0519-43da-a1c6-a04a281f32d4",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "7f14a368-085c-4323-8a31-8e71cadee2da",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "API",
-			"item": [
-				{
-					"name": "Auth",
-					"item": [
-						{
-							"name": "Login",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "97cda9e0-256e-44f9-93f4-2efd296778c3",
-										"exec": [
-											"//Checa se o retorno da requisicao está com status 200\r",
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"//Seta o token no header\r",
-											"let jsonData = JSON.parse(responseBody)\r",
-											"postman.setEnvironmentVariable(\"token\", jsonData.token);"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{ip}}/login",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"login"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Users",
-					"item": [
-						{
-							"name": "index",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://{{ip}}/users",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "store",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"John\",\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{ip}}/register",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "show",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://{{ip}}/users/5fca7ab0d5ed0e260c898fba",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"users",
-										"5fca7ab0d5ed0e260c898fba"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"New Name\",\r\n    \"email\": \"johndoe@test.com\",\r\n    \"password\": \"asde2234\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://{{ip}}/users",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://{{ip}}/users",
-									"protocol": "http",
-									"host": [
-										"{{ip}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}

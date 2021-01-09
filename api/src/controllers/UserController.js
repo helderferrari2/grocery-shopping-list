@@ -1,5 +1,4 @@
-import bcrypt from 'bcryptjs';
-import User from '../models/User';
+import User from '../schemas/User';
 
 class UserController {
   async index(request, response) {
@@ -9,13 +8,14 @@ class UserController {
 
   async store(request, response) {
     try {
-      let { name, email, password } = request.body;
+      const { name, email, password } = request.body;
+
+      // Check if email exists
       const checkUserExists = await User.findOne({ email });
       if (checkUserExists)
         return response.status(400).json({ error: 'User already exists!!!' });
 
-      password = await bcrypt.hash(password, 8);
-
+      // Store data in database
       const user = await User.create({ name, email, password });
       return response.json(user);
     } catch (err) {
@@ -32,9 +32,9 @@ class UserController {
 
   async update(request, response) {
     try {
-      let { name, email, password } = request.body;
-      if (password) password = await bcrypt.hash(password, 8);
+      const { name, email, password } = request.body;
 
+      // Find and update data in database
       const user = await User.findByIdAndUpdate(
         request.user_id,
         { name, email, password },

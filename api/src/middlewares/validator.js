@@ -1,4 +1,4 @@
-function validator(schema) {
+function validateData(schema) {
   return async (req, res, next) => {
     try {
       await schema.validate(req.body, { abortEarly: false });
@@ -9,4 +9,4 @@ function validator(schema) {
   };
 }
 
-export default validator;
+export default validateData;
